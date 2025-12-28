@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard | End Time Ministry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
+            <img src="/static/images/logo.png" alt="End Time Ministry Logo" class="logo">
+            <div class="title-group">
+                <h1>Admin Dashboard</h1>
+                <span class="subtitle">Sermon Management Panel</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ADMIN ACTION BAR -->
+<nav class="dashboard-actions">
+    
+    <a href="/admin/change-password" class="action-btn">Change Password</a>
+    <a href="/admin/contact-messages" class="action-btn">Contact Messages</a>
+    <a href="/watch" class="action-btn">View Sermons</a>
+    <a href="/" class="action-btn ">Visit Website</a>
+    <a href="/admin/logout" class="action-btn danger">Logout</a>
+</nav>
+
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <section class="admin-section">
+        <div class="dashboard-container">
+
+            <!-- ADD VIDEO -->
+            <div class="add-video-form">
+                <h2>Add New Sermon</h2>
+
+                <form id="videoForm">
+                    <input type="text" id="title" placeholder="Sermon Title" required>
+                    <input type="url" id="youtube_link" placeholder="YouTube Video Link" required>
+                    <button type="submit">Publish Sermon</button>
+                </form>
+
+                <div id="formMessage"></div>
+            </div>
+
+            <!-- EXISTING SERMONS -->
+            <div class="existing-videos">
+                <h2>Published Sermons</h2>
+                <div id="videoList" class="video-grid">
+                    <!-- Videos loaded via JS -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="/static/js/admin.js"></script>
+</body>
+</html>

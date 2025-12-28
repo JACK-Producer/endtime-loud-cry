@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ video.title }} | End Time Ministry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="back-link">
+            <a href="/" class="nav-btn secondary-btn">←Back to Home</a>
+        </div>
+            <img src="/static/images/logo.png" alt="End Time Ministry Logo" class="logo">
+            <div class="title-group">
+                <h1>End Time Ministry</h1>
+                <span class="subtitle">Preparing the Church for the Coming of Christ</span>
+            </div>
+            
+        </div>
+        
+    </header>
+
+    <!-- WATCH SECTION -->
+    <section class="watch-section">
+        <div class="watch-container">
+            <h2 class="watch-title">{{ video.title }}</h2>
+            <div class="video-wrapper">
+                <iframe width="100%" height="500" 
+                        src="https://www.youtube.com/embed/{{ video.youtube_id }}" 
+                        title="{{ video.title }}" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            {% if video.description %}
+            <p class="video-description">{{ video.description }}</p>
+            {% endif %}
+        </div>
+        
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <p>&copy; 2025 End Time Ministry</p>
+            <p class="footer-note">Holding fast to sound doctrine</p>
+        </div>
+    </footer>
+
+</body>
+</html>
