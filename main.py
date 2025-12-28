@@ -181,23 +181,6 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 def admin_dashboard(request: Request, admin: Admin = Depends(get_current_admin_cookie)):
     return templates.TemplateResponse("admin/dashboard.html", {"request": request, "admin": admin})
 
-from sqlalchemy.orm import Session
-from fastapi import Depends
-
-@app.get("/create-admin-once")
-def create_admin_once(db: Session = Depends(get_db)):
-    existing = db.query(Admin).filter(Admin.username == "admin").first()
-    if existing:
-        return {"message": "Admin already exists"}
-
-    hashed_password = get_password_hash("StrongPassword123")
-    admin = Admin(username="admin", hashed_password=hashed_password)
-    db.add(admin)
-    db.commit()
-    return {"message": "Admin created successfully"}
-
-
-
 # ---------------------------
 # ADMIN VIDEO MANAGEMENT
 # ---------------------------
@@ -390,12 +373,16 @@ def delete_message(message_id: int, db: Session = Depends(get_db), admin: Admin 
 
 
 
+
+
+
+
 def send_email(to_email: str, subject: str, body: str):
-    # Configure your SMTP settings here
-    SMTP_SERVER = "smtp.gmail.com"  # e.g., smtp.gmail.com
+    # Temporary hardcoded credentials (works on free Render)
+    SMTP_SERVER = "smtp.gmail.com"
     SMTP_PORT = 587
     SMTP_USERNAME = "gichobijackson@gmail.com"
-    SMTP_PASSWORD = "zfml inny spgm awtt "
+    SMTP_PASSWORD = "zfml inny spgm awtt"  # <-- Replace with App Password
 
     msg = EmailMessage()
     msg["Subject"] = subject
@@ -403,11 +390,16 @@ def send_email(to_email: str, subject: str, body: str):
     msg["To"] = to_email
     msg.set_content(body)
 
-    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-        server.starttls()  # secure the connection
-        server.login(SMTP_USERNAME, SMTP_PASSWORD)
-        server.send_message(msg)
-        print(f"Email sent to {to_email}")
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SMTP_USERNAME, SMTP_PASSWORD)
+            server.send_message(msg)
+            print(f"Email sent to {to_email}")
+    except Exception as e:
+        print("EMAIL ERROR:", e)
+        raise
+
 
 # Route to send reply
 @app.post("/admin/contact-messages/reply")
