@@ -5,8 +5,9 @@ from sqlalchemy.orm import sessionmaker
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# 👇 fallback for LOCAL development only
 if DATABASE_URL is None:
-    raise ValueError("DATABASE_URL environment variable is not set")
+    DATABASE_URL = "postgresql://postgres:1234@localhost:5432/Endtime_Ministry"
 
 engine = create_engine(
     DATABASE_URL,

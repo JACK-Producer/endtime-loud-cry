@@ -181,6 +181,19 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 def admin_dashboard(request: Request, admin: Admin = Depends(get_current_admin_cookie)):
     return templates.TemplateResponse("admin/dashboard.html", {"request": request, "admin": admin})
 
+@app.post("/create-admin-once")
+def create_admin_once(db: Session = Depends(get_db)):
+    existing = db.query(Admin).filter(Admin.username == "admin").first()
+    if existing:
+        return {"message": "Admin already exists"}
+
+    hashed_password = get_password_hash("StrongPassword123")
+    admin = Admin(username="admin", hashed_password=hashed_password)
+    db.add(admin)
+    db.commit()
+    return {"message": "Admin created successfully"}
+
+
 # ---------------------------
 # ADMIN VIDEO MANAGEMENT
 # ---------------------------
